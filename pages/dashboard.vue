@@ -53,7 +53,7 @@ const statusLabel = (s: string) => {
         </div>
       </div>
 
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div class="panel-grid">
         <!-- Department breakdown -->
         <div class="card">
           <div class="card-head">

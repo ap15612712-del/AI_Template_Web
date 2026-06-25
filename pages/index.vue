@@ -96,7 +96,7 @@
       </div>
 
       <!-- Quick start -->
-      <div style="margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div class="panel-grid" style="margin-top:16px;">
         <div class="card">
           <div class="card-head"><span class="card-title">Quick Start</span></div>
           <div class="card-body">

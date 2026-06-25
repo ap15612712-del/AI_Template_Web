@@ -750,21 +750,154 @@ select.form-input {
 ::-webkit-scrollbar-thumb:hover { background: var(--border2); }
 
 /* ═══════════════════════════════════════
-   RESPONSIVE
+   HAMBURGER TOGGLE (mobile only)
+══════════════════════════════════════ */
+.sb-toggle {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 300;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r);
+  background: var(--sb-bg);
+  border: 1px solid var(--sb-border);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+
+.sb-toggle span {
+  display: block;
+  width: 17px;
+  height: 1.5px;
+  background: var(--sb-link);
+  border-radius: 2px;
+  transition: transform .22s cubic-bezier(.16,1,.3,1), opacity .22s;
+  transform-origin: center;
+}
+
+.ham-1.is-open { transform: translateY(6.5px) rotate(45deg); }
+.ham-2.is-open { opacity: 0; transform: scaleX(0); }
+.ham-3.is-open { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Sidebar overlay backdrop */
+.sb-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  z-index: 199;
+  cursor: pointer;
+  transition: background .25s;
+  pointer-events: none;
+}
+
+.sb-overlay.open {
+  background: rgba(0,0,0,.52);
+  pointer-events: all;
+}
+
+/* Two-column responsive grid utility */
+.panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE — 1024px (tablet landscape)
 ══════════════════════════════════════ */
 @media (max-width: 1100px) {
   .stat-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-@media (max-width: 900px) {
+/* ═══════════════════════════════════════
+   RESPONSIVE — 768px (tablet portrait)
+══════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Show hamburger */
+  .sb-toggle { display: flex; }
+
+  /* Show overlay */
+  .sb-overlay { display: block; }
+
+  /* Sidebar: off-screen by default, slides in when .open */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform .28s cubic-bezier(.16,1,.3,1), box-shadow .28s;
+    box-shadow: none;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 8px 0 48px rgba(0,0,0,.35);
+  }
+
+  /* Main content takes full width */
+  .app-wrap { margin-left: 0; }
+
+  /* Shift header right to clear hamburger button */
+  .app-header {
+    padding-left: 60px;
+    padding-right: 16px;
+  }
+
+  /* Stat cards: 2 columns */
   .stat-grid { grid-template-columns: repeat(2, 1fr); }
-  .app-main { padding: 20px; }
+
+  /* 2-col utility → single column */
+  .panel-grid { grid-template-columns: 1fr; }
+
+  /* Reduce main padding */
+  .app-main { padding: 16px; }
+
+  /* Form rows stack */
+  .form-row { grid-template-columns: 1fr; }
+
+  /* Card head wrap on small screens */
+  .card-head { flex-wrap: wrap; gap: 8px; }
+  .header-actions { flex-wrap: wrap; }
 }
 
-@media (max-width: 640px) {
-  .sidebar { transform: translateX(-100%); }
-  .app-wrap { margin-left: 0; }
+/* ═══════════════════════════════════════
+   RESPONSIVE — 480px (mobile)
+══════════════════════════════════════ */
+@media (max-width: 480px) {
+  /* Stat cards: single column */
   .stat-grid { grid-template-columns: 1fr; }
-  .form-row { grid-template-columns: 1fr; }
-  .app-header { padding: 0 16px; }
+
+  /* Reduce all gaps */
+  .stat-grid { gap: 12px; margin-bottom: 16px; }
+  .app-main { padding: 12px; }
+
+  /* Smaller header */
+  .app-header {
+    height: 52px;
+    padding-left: 58px;
+    padding-right: 12px;
+    gap: 6px;
+  }
+
+  .page-title-h { font-size: 14px; }
+
+  /* Hero section compact */
+  .stat-val { font-size: 26px; }
+
+  /* Reduce card padding */
+  .card-body { padding: 14px; }
+  .card-head { padding: 12px 14px; }
+  .form-sec-body { padding: 14px; }
+
+  /* Buttons compact */
+  .btn { padding: 7px 12px; font-size: 13px; }
+  .btn-sm { padding: 5px 9px; font-size: 11.5px; }
+
+  /* Table: horizontal scroll, compact */
+  .data-table th,
+  .data-table td { padding: 9px 12px; font-size: 12.5px; }
 }

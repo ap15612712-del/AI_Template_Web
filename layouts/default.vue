@@ -2,11 +2,24 @@
 import { useRoute } from 'vue-router';
 const route = useRoute();
 const isActive = (path: string) => path === '/' ? route.path === '/' : route.path.startsWith(path);
+
+const sidebarOpen = ref(false);
+watch(() => route.path, () => { sidebarOpen.value = false; });
 </script>
 
 <template>
-  <div style="display:flex;">
-    <aside class="sidebar">
+  <div>
+    <!-- Mobile hamburger button (fixed, only on mobile) -->
+    <button class="sb-toggle" @click="sidebarOpen = !sidebarOpen" :aria-label="sidebarOpen ? 'Close menu' : 'Open menu'">
+      <span :class="{ 'ham-1': true, 'is-open': sidebarOpen }"></span>
+      <span :class="{ 'ham-2': true, 'is-open': sidebarOpen }"></span>
+      <span :class="{ 'ham-3': true, 'is-open': sidebarOpen }"></span>
+    </button>
+
+    <!-- Backdrop overlay (mobile only) -->
+    <div class="sb-overlay" :class="{ open: sidebarOpen }" @click="sidebarOpen = false"></div>
+
+    <aside class="sidebar" :class="{ open: sidebarOpen }">
       <div class="sb-brand">
         <NuxtLink to="/" class="sb-logo">
           <span class="sb-dot"></span>
