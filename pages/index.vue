@@ -11,7 +11,7 @@
     <div class="app-main page-enter">
       <!-- Hero -->
       <div style="margin-bottom:28px; padding:28px; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg); position:relative; overflow:hidden;">
-        <div style="position:absolute; top:-40px; right:-40px; width:200px; height:200px; background:radial-gradient(circle, rgba(232,180,77,.07) 0%, transparent 70%); pointer-events:none;"></div>
+        <div style="position:absolute; top:-40px; right:-40px; width:200px; height:200px; background:radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); pointer-events:none;"></div>
         <div style="font-size:10px; text-transform:uppercase; letter-spacing:.12em; color:var(--text-3); margin-bottom:10px;">Nuxt 3 · TypeScript · Prisma · SQLite / PostgreSQL</div>
         <h1 style="font-family:var(--font-d); font-size:28px; font-weight:800; color:var(--text); letter-spacing:-1px; line-height:1.1; margin-bottom:10px;">
           HR<span style="color:var(--accent);">System</span>
