@@ -532,6 +532,7 @@ a { color: inherit; }
 .badge-red    { background: var(--red-dim);   color: var(--red);   }
 .badge-amber  { background: var(--amber-dim); color: var(--amber); }
 .badge-blue   { background: var(--blue-dim);  color: var(--blue);  }
+.badge-accent { background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); }
 .badge-muted  { background: var(--surface3);  color: var(--text-2); border: 1px solid var(--border); }
 
 /* ═══════════════════════════════════════
