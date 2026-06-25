@@ -1,0 +1,32 @@
+# Nuxt
+.nuxt/
+.output/
+.data/
+
+# Dependencies
+node_modules/
+
+# Build
+dist/
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# Vercel
+.vercel
+
+# Prisma generated
+generated/
