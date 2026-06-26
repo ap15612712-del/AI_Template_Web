@@ -12,7 +12,10 @@ interface Employee {
   status: string;
 }
 
-const { data: employees, refresh } = await useFetch<Employee[]>('/api/employees');
+const { apiFetch, apiBase } = useApi();
+const { authHeaders } = useAuth();
+
+const { data: employees, refresh } = await useFetch<Employee[]>(`${apiBase}/api/employees`, { headers: authHeaders.value });
 
 const alertMsg = ref('');
 const alertType = ref<'success' | 'error'>('success');
@@ -25,7 +28,7 @@ const showAlert = (msg: string, type: 'success' | 'error') => {
 
 const handleDelete = async (id: number) => {
   if (!confirm('ต้องการลบพนักงานคนนี้?')) return;
-  const { error } = await useFetch(`/api/employees/${id}`, { method: 'DELETE' });
+  const { error } = await useFetch(`${apiBase}/api/employees/${id}`, { method: 'DELETE', headers: authHeaders.value });
   if (!error.value) {
     showAlert('ลบข้อมูลสำเร็จ', 'success');
     await refresh();

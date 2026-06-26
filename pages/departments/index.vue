@@ -1,11 +1,13 @@
 <script setup lang="ts">
-interface Department { id: number; name: string; _count: { employees: number }; createdAt: string; }
-const { data: departments, refresh } = await useFetch<Department[]>('/api/departments');
+const { apiBase } = useApi();
+const { authHeaders } = useAuth();
+interface Department { id: number; name: string; employeeCount: number; createdAt: string; }
+const { data: departments, refresh } = await useFetch<Department[]>(`${apiBase}/api/departments`, { headers: authHeaders.value });
 const alertMsg = ref(''); const alertType = ref<'success'|'error'>('success');
 const showAlert = (msg: string, type: 'success'|'error') => { alertMsg.value = msg; alertType.value = type; setTimeout(() => { alertMsg.value = ''; }, 3000); };
 const handleDelete = async (id: number) => {
   if (!confirm('ลบแผนกนี้? พนักงานในแผนกจะต้องถูกย้ายก่อน')) return;
-  const { error } = await useFetch(`/api/departments/${id}`, { method: 'DELETE' });
+  const { error } = await useFetch(`${apiBase}/api/departments/${id}`, { method: 'DELETE', headers: authHeaders.value });
   if (!error.value) { showAlert('ลบสำเร็จ', 'success'); await refresh(); }
   else showAlert('ลบไม่สำเร็จ', 'error');
 };
@@ -44,7 +46,7 @@ const handleDelete = async (id: number) => {
               <tr v-for="d in departments" :key="d.id">
                 <td style="color:var(--text-3);">{{ d.id }}</td>
                 <td class="td-bold">{{ d.name }}</td>
-                <td style="text-align:center;"><span class="badge badge-blue">{{ d._count.employees }}</span></td>
+                <td style="text-align:center;"><span class="badge badge-blue">{{ d.employeeCount }}</span></td>
                 <td style="text-align:center;">
                   <button class="btn btn-danger" @click="handleDelete(d.id)">Del</button>
                 </td>

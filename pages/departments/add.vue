@@ -1,11 +1,13 @@
 <script setup lang="ts">
 const router = useRouter();
+const { apiBase } = useApi();
+const { authHeaders } = useAuth();
 const name = ref('');
 const saving = ref(false);
 const error = ref('');
 const handleSubmit = async () => {
   saving.value = true; error.value = '';
-  const { error: e } = await useFetch('/api/departments', { method: 'POST', body: { name: name.value } });
+  const { error: e } = await useFetch(`${apiBase}/api/departments`, { method: 'POST', body: { name: name.value }, headers: authHeaders.value });
   saving.value = false;
   if (!e.value) await router.push('/departments');
   else error.value = 'เกิดข้อผิดพลาด กรุณาลองใหม่';
