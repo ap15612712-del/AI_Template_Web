@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const { data: stats, pending } = await useFetch('/api/stats');
+const { apiBase } = useApi();
+const { authHeaders } = useAuth();
+const { data: stats, pending } = await useFetch(`${apiBase}/api/stats`, { headers: authHeaders.value });
 
 const statusBadge = (s: string) => {
   if (s === 'active')   return 'badge-green';

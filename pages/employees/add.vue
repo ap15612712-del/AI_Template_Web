@@ -1,9 +1,11 @@
 <script setup lang="ts">
 const router = useRouter();
+const { apiBase } = useApi();
+const { authHeaders } = useAuth();
 
 interface Department { id: number; name: string; }
 
-const { data: departments } = await useFetch<Department[]>('/api/departments');
+const { data: departments } = await useFetch<Department[]>(`${apiBase}/api/departments`, { headers: authHeaders.value });
 
 const form = ref({
   firstName: '',
@@ -23,9 +25,10 @@ const error = ref('');
 const handleSubmit = async () => {
   saving.value = true;
   error.value = '';
-  const { error: fetchError } = await useFetch('/api/employees', {
+  const { error: fetchError } = await useFetch(`${apiBase}/api/employees`, {
     method: 'POST',
     body: { ...form.value },
+    headers: authHeaders.value,
   });
   saving.value = false;
   if (!fetchError.value) {
